@@ -1,24 +1,49 @@
 import React from "react";
 import { useState } from "react";
+import {
+  GAME_STATE_PLAYING,
+  GAME_STATE_WIN,
+  NO_CIRCLES,
+  NO_PLAYER,
+  PLAYER_1,
+  PLAYER_2,
+} from "../Constants";
+import { isWinner } from "../helper";
+import Footer from "./Footer";
 import GameCircle from "./GameCircle";
+import Header from "./Header";
 const GameBoard = () => {
-  const NO_PLAYER = 0;
-  const PLAYER_1 = 1;
-  const PLAYER_2 = 2;
-
-  const [gameBoard, setGameBoard] = useState(Array(16).fill(NO_PLAYER));
+  const [gameBoard, setGameBoard] = useState(Array(NO_CIRCLES).fill(NO_PLAYER));
   const [currentPlayer, setCurrentPlayer] = useState(PLAYER_1);
+  const [gameState, setGameState] = useState(GAME_STATE_PLAYING);
+  const [winPlayer, setWinPlayer] = useState(NO_PLAYER);
+
+  const initBoard = () => {
+    const circles = [];
+    for (let i = 0; i < NO_CIRCLES; i++) {
+      circles.push(renderCircle(i));
+    }
+
+    return circles;
+  };
 
   const handleClick = (id) => {
-    const board=[...gameBoard]
-    board[id]=currentPlayer
-    setGameBoard(board)
+    if (gameBoard[id] !== NO_PLAYER || gameState !== GAME_STATE_PLAYING) return;
+
+    setGameBoard((prev) => {
+      return prev.map((circle, pos) => {
+        if (pos === id) return currentPlayer;
+        return circle;
+      });
+    });
     setCurrentPlayer(currentPlayer === PLAYER_1 ? PLAYER_2 : PLAYER_1);
-    console.log(gameBoard);
+    if (isWinner(gameBoard, id, currentPlayer)) setGameState(GAME_STATE_WIN);
+    setWinPlayer(currentPlayer);
   };
 
   const renderCircle = (id) => (
     <GameCircle
+      key={id}
       id={id}
       handleClick={handleClick}
       className={`player_${gameBoard[id]}`}
@@ -26,24 +51,15 @@ const GameBoard = () => {
   );
 
   return (
-    <div className="gameBoard">
-      {renderCircle(0)}
-      {renderCircle(1)}
-      {renderCircle(2)}
-      {renderCircle(3)}
-      {renderCircle(4)}
-      {renderCircle(5)}
-      {renderCircle(6)}
-      {renderCircle(7)}
-      {renderCircle(8)}
-      {renderCircle(9)}
-      {renderCircle(10)}
-      {renderCircle(11)}
-      {renderCircle(12)}
-      {renderCircle(13)}
-      {renderCircle(14)}
-      {renderCircle(15)}
-    </div>
+    <>
+      <Header
+        currentPlayer={currentPlayer}
+        gameState={gameState}
+        winPlayer={winPlayer}
+      />
+      <div className="gameBoard">{initBoard()}</div>
+      <Footer />
+    </>
   );
 };
 
