@@ -1,12 +1,57 @@
-# React + Vite
+# React Connect-4 Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a mini React project created as part of the **Advanced React Projects and Ecommerce Development (Module 3)** course offered by **Coursera** and developed by **Packt**.
 
-Currently, two official plugins are available:
+It’s a simple **Connect Four**-style game implemented in React, showcasing state management, conditional rendering, and basic game logic with a smart computer move suggestion feature.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## <img width="25" height="25" src="https://img.icons8.com/ios/50/61dafb/features-list.png" alt="features-list"/> Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 4x4 Connect Four-style game board.
+- Player-vs-Player and AI move suggestion.
+- Smart AI move suggestion based on potential winning patterns.
+- Game states: **Playing**, **Win**, and **Draw**.
+
+---
+
+## <img width="25" height="25" src="https://img.icons8.com/ios/50/61dafb/maintenance--v1.png" alt="maintenance--v1"/> Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (v14+)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/shrMohtashm/connect4-game.git
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+
+   ```bash
+   npm run dev
+   ```   
+
+## <img width="25" height="25" src="https://img.icons8.com/ios/50/61dafb/file-preview.png" alt="file-preview"/> Preview
+
+![Connect 4 Game Screenshot](images/connect4.png)
+
+---
+
+## <img width="25" height="25" src="https://img.icons8.com/ios/50/61dafb/certificate--v1.png" alt="certificate--v1"/> License
+
+This project is for educational purposes only as part of a Coursera course. All rights reserved by Packt and Coursera.
+
+---
