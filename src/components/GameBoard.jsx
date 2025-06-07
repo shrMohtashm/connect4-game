@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import {
+  GAME_STATE_DRAW,
   GAME_STATE_PLAYING,
   GAME_STATE_WIN,
   NO_CIRCLES,
@@ -8,7 +9,7 @@ import {
   PLAYER_1,
   PLAYER_2,
 } from "../Constants";
-import { isWinner } from "../helper";
+import { isDraw, isWinner } from "../helper";
 import Footer from "./Footer";
 import GameCircle from "./GameCircle";
 import Header from "./Header";
@@ -29,7 +30,6 @@ const GameBoard = () => {
 
   const handleClick = (id) => {
     if (gameBoard[id] !== NO_PLAYER || gameState !== GAME_STATE_PLAYING) return;
-
     setGameBoard((prev) => {
       return prev.map((circle, pos) => {
         if (pos === id) return currentPlayer;
@@ -37,8 +37,14 @@ const GameBoard = () => {
       });
     });
     setCurrentPlayer(currentPlayer === PLAYER_1 ? PLAYER_2 : PLAYER_1);
-    if (isWinner(gameBoard, id, currentPlayer)) setGameState(GAME_STATE_WIN);
-    setWinPlayer(currentPlayer);
+    if (isWinner(gameBoard, id, currentPlayer)) {
+      setGameState(GAME_STATE_WIN);
+      setWinPlayer(currentPlayer);
+    }
+    if (isDraw(gameBoard, id, currentPlayer)) {
+      setGameState(GAME_STATE_DRAW);
+      setWinPlayer(NO_PLAYER);
+    }
   };
 
   const renderCircle = (id) => (

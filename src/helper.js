@@ -26,3 +26,12 @@ export const isWinner = (gameBoard, currentMove, currentPlayer) => {
   }
   return false;
 };
+
+export const isDraw = (gameBoard, currentMove, currentPlayer) => {
+  const board = [...gameBoard];
+  board[currentMove] = currentPlayer;
+  if (board.every((item) => item !== 0)) {
+    return true;
+  }
+  return false;
+};
