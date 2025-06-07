@@ -13,7 +13,7 @@ const Header = ({ currentPlayer, gameState, winPlayer }) => {
       case GAME_STATE_WIN:
         return `Player ${winPlayer} Wins`;
       case GAME_STATE_DRAW:
-        return `Game is a Draw!`;
+        return `Game is Draw!`;
     }
   };
   return (

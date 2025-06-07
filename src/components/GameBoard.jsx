@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import {
   GAME_STATE_DRAW,
@@ -9,7 +10,7 @@ import {
   PLAYER_1,
   PLAYER_2,
 } from "../Constants";
-import { isDraw, isWinner } from "../helper";
+import { getComputerMove, isDraw, isWinner } from "../helper";
 import Footer from "./Footer";
 import GameCircle from "./GameCircle";
 import Header from "./Header";
@@ -18,6 +19,17 @@ const GameBoard = () => {
   const [currentPlayer, setCurrentPlayer] = useState(PLAYER_1);
   const [gameState, setGameState] = useState(GAME_STATE_PLAYING);
   const [winPlayer, setWinPlayer] = useState(NO_PLAYER);
+
+  const iniitGame = () => {
+    setGameBoard(Array(NO_CIRCLES).fill(NO_PLAYER));
+    setCurrentPlayer(PLAYER_1);
+    setGameState(GAME_STATE_PLAYING);
+    setWinPlayer(NO_PLAYER);
+  };
+
+  useEffect(() => {
+    iniitGame();
+  }, []);
 
   const initBoard = () => {
     const circles = [];
@@ -29,7 +41,12 @@ const GameBoard = () => {
   };
 
   const handleClick = (id) => {
-    if (gameBoard[id] !== NO_PLAYER || gameState !== GAME_STATE_PLAYING) return;
+    if (
+      gameBoard[id] !== NO_PLAYER ||
+      gameState !== GAME_STATE_PLAYING ||
+      id === null
+    )
+      return;
     setGameBoard((prev) => {
       return prev.map((circle, pos) => {
         if (pos === id) return currentPlayer;
@@ -45,6 +62,10 @@ const GameBoard = () => {
       setGameState(GAME_STATE_DRAW);
       setWinPlayer(NO_PLAYER);
     }
+  };
+
+  const suggestMove = () => {
+    handleClick(getComputerMove(gameBoard));
   };
 
   const renderCircle = (id) => (
@@ -64,7 +85,11 @@ const GameBoard = () => {
         winPlayer={winPlayer}
       />
       <div className="gameBoard">{initBoard()}</div>
-      <Footer />
+      <Footer
+        onNewGameClick={iniitGame}
+        onSuggestClick={suggestMove}
+        gameState={gameState}
+      />
     </>
   );
 };

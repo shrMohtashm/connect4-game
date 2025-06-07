@@ -1,9 +1,14 @@
 import React from "react";
+import { GAME_STATE_PLAYING } from "../Constants";
 
-const Footer = () => {
+const Footer = ({ onNewGameClick, onSuggestClick, gameState }) => {
   return (
     <div className="panel footer">
-      <button>New game</button>
+      {gameState === GAME_STATE_PLAYING ? (
+        <button onClick={onSuggestClick}>Suggest</button>
+      ) : (
+        <button onClick={onNewGameClick}>New game</button>
+      )}
     </div>
   );
 };
